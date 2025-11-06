@@ -1,0 +1,828 @@
+:root {
+    --bg: #e1d9d1;
+    --surface: #fff;
+    --card-grad-2: #9f9086;
+    --primary: #d3baad;
+    --secondary: #d3baad;
+    --accent: #d7c6b7;
+    --muted: rgba(58, 46, 39, 0.65);
+    --radius: 18px;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --gap: 20px;
+    --highlight: #e9e2da;
+}
+
+/* Base */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #3a2e27;
+    /* marron profond */
+    color: #e1d9d1;
+    /* beige clair */
+    font-family: 'Poppins', sans-serif;
+    /* match fonts loaded in HTML */
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+::selection {
+    background-color: #8c6d60;
+    color: #e1d9d1;
+}
+
+/* NAV */
+nav {
+    width: 100%;
+    background-color: #8c6d60;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    overflow: hidden;
+}
+
+nav ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 120vw;
+    /* 6 items * 20vw */
+    height: 100%;
+    display: flex;
+}
+
+nav li {
+    margin: 0;
+    flex: 0 0 20vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 800;
+    transform: translateY(100%);
+    position: relative;
+    z-index: 1;
+    /* keep items above the .slide highlight */
+    user-select: none;
+}
+
+nav li.active {
+    background-color: rgba(0, 0, 0, 0.18);
+    color: #efefef;
+}
+
+nav li.active::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #c0b3a9;
+}
+
+/* Entrance animation for menu items (6 items assumed) */
+nav li:nth-child(1) {
+    animation: pop 0.5s 0.15s 1 forwards;
+}
+
+nav li:nth-child(2) {
+    animation: pop 0.5s 0.30s 1 forwards;
+}
+
+nav li:nth-child(3) {
+    animation: pop 0.5s 0.45s 1 forwards;
+}
+
+nav li:nth-child(4) {
+    animation: pop 0.5s 0.60s 1 forwards;
+}
+
+nav li:nth-child(5) {
+    animation: pop 0.5s 0.75s 1 forwards;
+}
+
+nav li:nth-child(6) {
+    animation: pop 0.5s 0.90s 1 forwards;
+}
+
+nav li:hover {
+    color: #ececec;
+}
+
+nav li:active {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* slide highlight (the last li in markup should have class="slide") */
+nav .slide {
+    position: absolute;
+    left: -20vw;
+    /* hidden initially */
+    top: 0;
+    width: 20vw;
+    /* highlight width for one item */
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.06);
+    /* subtle highlight */
+    z-index: 0;
+    transition: left 0.25s ease;
+    pointer-events: none;
+}
+
+/* move highlight on hover (siblings) */
+nav li:nth-child(1):hover~.slide {
+    left: 0;
+}
+
+nav li:nth-child(2):hover~.slide {
+    left: 20vw;
+}
+
+nav li:nth-child(3):hover~.slide {
+    left: 40vw;
+}
+
+nav li:nth-child(4):hover~.slide {
+    left: 60vw;
+}
+
+nav li:nth-child(5):hover~.slide {
+    left: 80vw;
+}
+
+nav li:nth-child(6):hover~.slide {
+    left: 100vw;
+}
+
+/* HERO SECTION (used in index.html) */
+section {
+    background-color: #3a2e27;
+    height: 100vh;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px;
+    box-sizing: border-box;
+}
+
+/* Title inside hero */
+section .title {
+    max-width: 60%;
+    width: 100%;
+    align-self: center;
+    transform: translateY(-50px);
+    margin: 0;
+    overflow: hidden;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+section .title span {
+    display: inline-block;
+    font-size: 5vw;
+    color: #efefef;
+    width: 100%;
+    text-transform: uppercase;
+    transform: translateY(150%);
+    /* start out below, animate up */
+    animation: byBottom 1s ease both;
+    font-weight: 600;
+    letter-spacing: 0.25vw;
+}
+
+section .title span:last-child {
+    font-size: 1rem;
+    animation: byBottom 1s 0.25s ease both;
+}
+
+section .title span a {
+    position: relative;
+    display: inline-block;
+    margin-left: 0.2rem;
+    color: #d3baad;
+    text-decoration: none;
+}
+
+section .title span a::after {
+    content: "";
+    height: 2px;
+    background-color: #9f9086;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 0;
+    animation: linkAfter 0.5s 1s ease both;
+}
+
+/* Small utility */
+.texts {
+    color: #efefef;
+}
+
+/* Animations */
+@keyframes pop {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes byBottom {
+    0% {
+        transform: translateY(150%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes linkAfter {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 30px;
+    }
+}
+
+
+.fade-in-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 1s ease forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* About / paragraphs */
+.about-section div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.about-section span {
+    font-weight: 600;
+    font-size: 3rem;
+    font-family: 'Poppins', sans-serif;
+    color: var(--bg);
+}
+
+.about-section span:nth-child(-n+2) {
+    color: #e1d9d1;
+}
+
+.texts p {
+    font-weight: 300;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+}
+
+/* Title small helpers */
+.title {
+    font-size: 24px;
+    color: black;
+}
+
+.title span {
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.title span:first-child:hover {
+    color: #efa1cd;
+    cursor: pointer;
+}
+
+/* pop-text */
+.pop-text {
+    display: inline-block;
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: #e1d9d1;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.pop-text:hover {
+    color: #ee6a9c;
+    transform: scale(1.08);
+}
+
+/* title links */
+.title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.title a:hover {
+    text-decoration: underline;
+}
+
+/* Content layout for non-hero pages */
+.content-section {
+    width: 85%;
+    max-width: 1000px;
+    margin: 60px auto 100px;
+    column-count: 2;
+    column-gap: 3rem;
+    text-align: justify;
+}
+
+.content-section p {
+    margin-bottom: 1.5rem;
+    break-inside: avoid;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 0 6rem;
+    font-size: 0.9rem;
+    color: #e1d9d1;
+    background-color: #3a2e27;
+}
+
+/* Responsive tweaks */
+@media (max-width: 800px) {
+    section .title {
+        max-width: 90%;
+    }
+
+    section .title span {
+        font-size: 8vw;
+    }
+
+    nav ul {
+        width: 100vw;
+    }
+
+    nav li {
+        flex: 0 0 33.3333vw;
+        letter-spacing: 2px;
+        font-size: 11px;
+    }
+
+    nav .slide {
+        width: 33.3333vw;
+    }
+}
+
+@media (max-width: 480px) {
+
+    nav li:nth-child(4),
+    nav li:nth-child(5),
+    nav li:nth-child(6) {
+        display: none;
+    }
+
+    nav ul {
+        width: 100vw;
+    }
+
+    section .title span {
+        font-size: 10vw;
+    }
+}
+
+:root {
+    --bg: #e1d9d1;
+    --surface: #fff;
+    --card-grad-2: #9f9086;
+    --primary: #d3baad;
+    --secondary: #d3baad;
+    --accent: #d7c6b7;
+    --muted: rgba(58, 46, 39, 0.65);
+    --radius: 18px;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    --gap: 20px;
+    --highlight: #e9e2da;
+}
+
+/* Base */
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #3a2e27;
+    /* marron profond */
+    color: #e1d9d1;
+    /* beige clair */
+    font-family: 'Poppins', sans-serif;
+    /* match fonts loaded in HTML */
+    line-height: 1.8;
+    font-weight: 300;
+}
+
+::selection {
+    background-color: #8c6d60;
+    color: #e1d9d1;
+}
+
+/* NAV */
+nav {
+    width: 100%;
+    background-color: #8c6d60;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    overflow: hidden;
+}
+
+nav ul {
+    position: absolute;
+    top: 0;
+    left: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    width: 120vw;
+    /* 6 items * 20vw */
+    height: 100%;
+    display: flex;
+}
+
+nav li {
+    margin: 0;
+    flex: 0 0 20vw;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    transition: background-color 0.25s ease, color 0.25s ease;
+    cursor: pointer;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-weight: 800;
+    transform: translateY(100%);
+    position: relative;
+    z-index: 1;
+    /* keep items above the .slide highlight */
+    user-select: none;
+}
+
+nav li.active {
+    background-color: rgba(0, 0, 0, 0.18);
+    color: #efefef;
+}
+
+nav li.active::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #c0b3a9;
+}
+
+/* Entrance animation for menu items (6 items assumed) */
+nav li:nth-child(1) {
+    animation: pop 0.5s 0.15s 1 forwards;
+}
+
+nav li:nth-child(2) {
+    animation: pop 0.5s 0.30s 1 forwards;
+}
+
+nav li:nth-child(3) {
+    animation: pop 0.5s 0.45s 1 forwards;
+}
+
+nav li:nth-child(4) {
+    animation: pop 0.5s 0.60s 1 forwards;
+}
+
+nav li:nth-child(5) {
+    animation: pop 0.5s 0.75s 1 forwards;
+}
+
+nav li:nth-child(6) {
+    animation: pop 0.5s 0.90s 1 forwards;
+}
+
+nav li:hover {
+    color: #ececec;
+}
+
+nav li:active {
+    background-color: rgba(255, 255, 255, 0.06);
+}
+
+/* slide highlight (the last li in markup should have class="slide") */
+nav .slide {
+    position: absolute;
+    left: -20vw;
+    /* hidden initially */
+    top: 0;
+    width: 20vw;
+    /* highlight width for one item */
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.06);
+    /* subtle highlight */
+    z-index: 0;
+    transition: left 0.25s ease;
+    pointer-events: none;
+}
+
+/* move highlight on hover (siblings) */
+nav li:nth-child(1):hover~.slide {
+    left: 0;
+}
+
+nav li:nth-child(2):hover~.slide {
+    left: 20vw;
+}
+
+nav li:nth-child(3):hover~.slide {
+    left: 40vw;
+}
+
+nav li:nth-child(4):hover~.slide {
+    left: 60vw;
+}
+
+nav li:nth-child(5):hover~.slide {
+    left: 80vw;
+}
+
+nav li:nth-child(6):hover~.slide {
+    left: 100vw;
+}
+
+/* HERO SECTION */
+section {
+    background-color: #3a2e27;
+    height: 100vh;
+    align-content: space-around;
+    justify-content: center;
+    padding: 0 120px;
+    box-sizing: border-box;
+}
+
+/* Title inside hero */
+section .title {
+    max-width: 60%;
+    width: 100%;
+    align-self: center;
+    transform: translateY(-50px);
+    margin: 0;
+    overflow: hidden;
+    padding-bottom: 10px;
+    text-align: left;
+}
+
+section .title span {
+    display: inline-block;
+    font-size: 5vw;
+    color: #efefef;
+    width: 100%;
+    text-transform: uppercase;
+    transform: translateY(150%);
+    /* start out below, animate up */
+    animation: byBottom 1s ease both;
+    font-weight: 600;
+    letter-spacing: 0.25vw;
+}
+
+section .title span:last-child {
+    font-size: 1rem;
+    animation: byBottom 1s 0.25s ease both;
+}
+
+section .title span a {
+    position: relative;
+    display: inline-block;
+    margin-left: 0.2rem;
+    color: #d3baad;
+    text-decoration: none;
+}
+
+section .title span a::after {
+    content: "";
+    height: 2px;
+    background-color: #9f9086;
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 0;
+    animation: linkAfter 0.5s 1s ease both;
+}
+
+/* Small utility */
+.texts {
+    color: #efefef;
+}
+
+/* Animations */
+@keyframes pop {
+    0% {
+        transform: translateY(100%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes byBottom {
+    0% {
+        transform: translateY(150%);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes linkAfter {
+    0% {
+        width: 0;
+    }
+
+    100% {
+        width: 30px;
+    }
+}
+
+/* simple fade-in for JS-triggered elements (remove experimental timeline props) */
+.fade-in-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeUp 1s ease forwards;
+}
+
+@keyframes fadeUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* About / paragraphs */
+.about-section div {
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.about-section span {
+    font-weight: 600;
+    font-size: 3rem;
+    font-family: 'Poppins', sans-serif;
+    color: var(--bg);
+}
+
+.about-section span:nth-child(-n+2) {
+    color: #e1d9d1;
+}
+
+.texts p {
+    font-weight: 300;
+    font-size: 1.1rem;
+    line-height: 1.3;
+    margin-bottom: 0.5rem;
+}
+
+/* Title small helpers */
+.title {
+    font-size: 24px;
+    color: black;
+}
+
+.title span {
+    display: inline-block;
+    transition: color 0.3s ease;
+}
+
+.title span:first-child:hover {
+    color: #efa1cd;
+    cursor: pointer;
+}
+
+/* title links */
+.title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.title a:hover {
+    text-decoration: underline;
+}
+
+/* Content layout for non-hero pages */
+.content-section {
+    width: 85%;
+    max-width: 1000px;
+    margin: 60px auto 100px;
+    column-count: 2;
+    column-gap: 3rem;
+    text-align: justify;
+}
+
+.content-section p {
+    margin-bottom: 1.5rem;
+    break-inside: avoid;
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 2rem 0 6rem;
+    font-size: 0.9rem;
+    color: #e1d9d1;
+    background-color: #3a2e27;
+}
+
+/* Responsive tweaks */
+@media (max-width: 800px) {
+    section .title {
+        max-width: 90%;
+    }
+
+    section .title span {
+        font-size: 8vw;
+    }
+
+    nav ul {
+        width: 100vw;
+    }
+
+    nav li {
+        flex: 0 0 33.3333vw;
+        letter-spacing: 2px;
+        font-size: 11px;
+    }
+
+    nav .slide {
+        width: 33.3333vw;
+    }
+}
+
+@media (max-width: 480px) {
+
+    nav li:nth-child(4),
+    nav li:nth-child(5),
+    nav li:nth-child(6) {
+        display: none;
+    }
+
+    nav ul {
+        width: 100vw;
+    }
+
+    .photo-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        width: 90%;
+        margin: 0 auto 100px;
+    }
+
+    .photo-gallery .photo {
+        display: flex;
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .photo-gallery img {
+        width: 100%;
+        height: auto;
+        border-radius: var(--radius);
+        transition: transform 0.3s ease;
+    }
+
+    .photo-gallery img:hover {
+        transform: scale(1.05);
+    }
