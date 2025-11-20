@@ -1,0 +1,25 @@
+.dynamic-underline {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: #efa1cd;
+    font-size: 18px;
+    font-weight: 600;
+    padding-bottom: 3px;
+}
+
+.dynamic-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 0%;
+    height: 2px;
+    background: #efa1cd;
+    /* couleur du souligné */
+    transition: width 0.3s ease;
+}
+
+.dynamic-underline:hover::after {
+    width: 100%;
+}
